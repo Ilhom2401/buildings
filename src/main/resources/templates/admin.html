@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/admin/assets/favicon.ico" />
+<!--    <link rel="stylesheet" href="/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/admin/css/styles.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+    <link rel="apple-touch-icon" th:href="@{/images/apple-touch-icon.png}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- All css files are included here. -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Owl Carousel  main css -->
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" th:href="@{/css/core.css}">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" th:href="@{/css/shortcode/shortcodes.css}">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Responsive css -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+    <!-- User style -->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+
+    <!-- Modernizr JS -->
+    <script th:src="@{/js/vendor/modernizr-2.8.3.min.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!-- End Header Top -->
+    <div id="sticky-header-with-topbar" class="mainmenu__wrap sticky__header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-6 col-xs-7">
+                    <div class="logo">
+                        <a href="#">
+                            <img th:src="@{/images/logo/sinply-construction.png}" alt="logo image">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-6 col-xs-5">
+                    <nav class="main__menu__nav  hidden-xs hidden-sm">
+                        <ul class="main__menu">
+                            <li><a href="/about">Biz haqimizda</a></li>
+                            <li><a href="/service">Hizmatlar</a></li>
+                            <li><a href="/projects">Loyihalar</a></li>
+                            <li><a href="/news">Yangiliklar</a></li>
+                            <li><a href="/contact">Bog'lanish</a></li>
+                        </ul>
+                    </nav>
+                    <div class="mobile-menu clearfix visible-xs visible-sm">
+                        <nav id="mobile_dropdown">
+                            <ul>
+                                <li><a href="/about">Biz haqimizda</a></li>
+                                <li><a href="/service">Hizmatlar</a></li>
+                                <li><a href="/projects">Loyihalar</a></li>
+                                <li><a href="/news">Yangiliklar</a></li>
+                                <li><a href="/contact">Bog'lanish</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="border-end bg-white" id="sidebar-wrapper">
+<!--        <div class="sidebar-heading border-bottom bg-light">Admin-page</div>-->
+        <form action="/get-employees" method="post" th:if="${roleId == 2}">
+                <button type="submit" name="userId" th:value="${empId}" class="list-group-item list-group-item-action list-group-item-light p-3" style="margin-right: 160px" href="#!">Employees</button>
+        </form>
+        <form action="/get-projects" method="post" th:if="${roleId == 2}">
+                <button type="submit" name="userId" th:value="${empId}" class="list-group-item list-group-item-action list-group-item-light p-3" style="margin-right: 160px" href="#!">Projects</button>
+        </form>
+        <form action="/get-products" method="post" th:if="${roleId == 3}">
+            <button type="submit" name="userId" th:value="${empId}" class="list-group-item list-group-item-action list-group-item-light p-3" style="margin-right: 160px" href="#!">Products</button>
+        </form>
+        <form action="/get-employess-accountant" method="post" th:if="${roleId == 4}">
+            <input name="projectId" th:value="${project.getId()}" hidden/>
+            <input name="userId" th:value="${empId}" hidden/>
+            <button type="submit" class="list-group-item list-group-item-action list-group-item-light p-3" th:text="${project.getName()}" style="margin-right: 160px" href="#!"></button>
+        </form>
+        <div th:each="project: ${projectList}" th:if="${roleId == 6}">
+            <form action="/get-employess-accountant" method="post">
+                <input name="projectId" th:value="${project.getId()}" hidden/>
+                <input name="userId" th:value="${empId}" hidden/>
+                <button type="submit" class="list-group-item list-group-item-action list-group-item-light p-3" th:text="${project.getName()}" style="margin-right: 160px" href="#!"></button>
+            </form>
+        </div>
+    </div>
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Page content-->
+        <div class="container-fluid">
+            <h1 class="mt-4 text-center" th:if="${roleId == 2}">Welcome to Admin page</h1>
+            <h1 class="mt-4 text-center" th:if="${roleId == 3}">Welcome to Controller page</h1>
+            <h1 class="mt-4 text-center" th:if="${roleId == 4}">Welcome to Accountant page</h1>
+            <h1 class="mt-4 text-center" th:if="${roleId == 6}">Welcome to General Accountant page</h1>
+            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+            <p>
+                Make sure to keep all page content within the
+                <code>#page-content-wrapper</code>
+                . The top navbar is optional, and just for demonstration. Just create an element with the
+                <code>#sidebarToggle</code>
+                ID which will toggle the menu when clicked.
+            </p>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/admin/js/scripts.js"></script>
+</body>
+</html>
